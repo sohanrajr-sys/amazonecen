@@ -409,6 +409,7 @@ if len(bigram_df) > 0:
     ax5.grid(axis='x', alpha=0.3)
 
 # Plot 6: Sequence Length Distribution (before padding)
+seq_train_lengths=[len(seq) for seq in seq_train]
 ax6 = fig.add_subplot(gs[2, 1])
 ax6.hist(seq_train_lengths, bins=50, color='lightgreen', edgecolor='black', alpha=0.7)
 ax6.axvline(np.mean(seq_train_lengths), color='red', linestyle='--', linewidth=2, label=f'Mean: {np.mean(seq_train_lengths):.1f}')
