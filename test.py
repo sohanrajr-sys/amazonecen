@@ -37,10 +37,30 @@ test['long_text'] = test['long_text'].astype(str).apply(clean_text)
 test['short_text'] = test['short_text'].astype(str).apply(clean_text)
 test['rating']=test['rating'].astype(int)-1
 
-#code to get 100000 samples from test with equal no. of classes
+# ============================================================================
+# USER INPUT: NUMBER OF SAMPLES PER CLASS
+# ============================================================================
+print("\n" + "="*70)
+print("TEST DATASET CONFIGURATION")
+print("="*70)
+
+while True:
+    try:
+        num_samples_per_class = int(input("Enter number of samples per class to test (e.g., 100, 250, 500): "))
+        if num_samples_per_class <= 0:
+            print("Error: Number of samples must be positive. Please try again.")
+            continue
+        break
+    except ValueError:
+        print("Error: Please enter a valid integer.")
+
+print(f"\nSelected: {num_samples_per_class} samples per class")
+print(f"Total test samples: {num_samples_per_class * 5}")
+
+# code to get balanced samples from test with equal no. of classes
 df_list = []
 for i in range(5):
-    df_class = test[test['rating'] == i].sample(n=250, random_state=42)
+    df_class = test[test['rating'] == i].sample(n=num_samples_per_class, random_state=42)
     df_list.append(df_class)
 balanced_test = pd.concat(df_list).reset_index(drop=True)
 
